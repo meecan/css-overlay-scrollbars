@@ -119,7 +119,9 @@ HTMLElement.prototype.validation = function(st = {}) {
         el.parentNode.classList.add('validate-label')
         createFeedback(el)
 
-        el.oninput = () => filterInput(el)
+        if (options.realTime !== false) {
+            el.oninput = () => filterInput(el)
+        }
     })
 
 
