@@ -89,6 +89,13 @@ HTMLElement.prototype.validation = function(st = {}) {
 
     // Filtering process of the input element.
     const filterInput = (el) => {
+        if (el.type == "radio") {
+            document.querySelectorAll(`[type="radio"][name="${el.name}"]`).forEach(el => {
+                inputSetValid(el)
+                return
+            })
+        }
+        
         if (!options.firstTime) {
             if (!onceChanged) {
                 if (checkInput(el)) {
