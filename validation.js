@@ -1,9 +1,15 @@
-HTMLElement.prototype.validation = function() {
+HTMLElement.prototype.validation = function(st = {}) {
 
     // Creating default variables.
     const form = this
     const inputs = form.querySelectorAll('input, textarea')
-
+    let onceChanged = false
+    let options = {
+        realTime:true,
+        firstTime:true,
+        onSubmit:null
+    }
+    options = { ...options, ...st }
 
 
     // Creating the element to use to show error messages.
