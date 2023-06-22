@@ -82,4 +82,27 @@ HTMLElement.prototype.validation = function() {
         el.oninput = () => filterInput(el)
     })
 
+
+
+    // Performing necessary actions when the form is submitted.
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let validityStatus = null
+        
+        inputs.forEach(el => {
+            if (!checkInput(el)) {
+                inputSetInvalid(el, el.validationMessage)
+                validityStatus = false
+
+                form.querySelector('.is-invalid').focus()
+            }else{
+                validityStatus = true
+            }
+        })
+        
+        if (validityStatus == true) {
+            form.submit()
+        }
+    })
+
 }
