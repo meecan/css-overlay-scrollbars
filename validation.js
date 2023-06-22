@@ -44,6 +44,14 @@ HTMLElement.prototype.validation = function() {
 
     // Styling the invalid input element.
     const inputSetInvalid = (el, msg) => {
+        if (el.getAttribute('data-equal') && msg == "") {
+            msg = "Doesnt match..."
+        }
+
+        if (el.getAttribute('pattern') && el.getAttribute('data-format') &&  el.value.length != 0) {
+            msg = `${msg} ${el.getAttribute('data-format')}`
+        }
+
         el.classList.remove('is-valid')
         el.classList.add('is-invalid')
         setFeedback(el, msg)
@@ -53,6 +61,17 @@ HTMLElement.prototype.validation = function() {
 
     // Checking whether an input element is valid or not.
     const checkInput = (el) => {
+        const equalAttr = el.getAttribute('data-equal')
+        const equalTo = document.querySelector(equalAttr)
+
+        if (equalAttr) {
+            if (el.value == equalTo.value && el.checkValidity()) {
+                return true
+            }else{
+                return false
+            }
+        }
+
         if (el.checkValidity()) {
             return true
         }else{
