@@ -12,6 +12,24 @@ HTMLElement.prototype.validation = function(st = {}) {
     options = { ...options, ...st }
 
 
+
+    // Printing a message to the selected element for server-side integration.
+    // Check out https://meecan.github.io/docs/js-form-validation/#server-side-integration for usage examples.
+    Object.prototype.setMessage = async function(data) {
+        await Promise.all(
+          Array.from(form.querySelectorAll('.is-invalid')).map(el => {
+            el.classList.remove('is-invalid');
+            el.parentNode.querySelector('.feedback-span').innerHTML = ''
+          })
+        )
+      
+        for await (const [key, val] of Object.entries(data)) {
+          inputSetInvalid(document.querySelector('[name="' + key + '"]'), val)
+        }
+    }
+
+
+    
     // Creating the element to use to show error messages.
     const createFeedback = (el) => {
         const feedback = document.createElement("span")
@@ -95,7 +113,7 @@ HTMLElement.prototype.validation = function(st = {}) {
                 return
             })
         }
-        
+
         if (!options.firstTime) {
             if (!onceChanged) {
                 if (checkInput(el)) {
