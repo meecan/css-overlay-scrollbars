@@ -141,7 +141,11 @@ HTMLElement.prototype.validation = function(st = {}) {
         })
         
         if (validityStatus == true) {
-            form.submit()
+            if (typeof options.onSubmit === "function") {
+                options.onSubmit()
+            }else{
+                form.submit()
+            }
         }
     })
 
