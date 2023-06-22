@@ -89,10 +89,25 @@ HTMLElement.prototype.validation = function(st = {}) {
 
     // Filtering process of the input element.
     const filterInput = (el) => {
-        if (checkInput(el)) {
-            inputSetValid(el)
-        } else {
-            inputSetInvalid(el, el.validationMessage)
+        if (!options.firstTime) {
+            if (!onceChanged) {
+                if (checkInput(el)) {
+                    inputSetValid(el)
+                    onceChanged = true
+                }
+            } else {
+                if (checkInput(el)) {
+                    inputSetValid(el)
+                } else {
+                    inputSetInvalid(el, el.validationMessage)
+                }
+            }
+        }else{
+            if (checkInput(el)) {
+                inputSetValid(el)
+            } else {
+                inputSetInvalid(el, el.validationMessage)
+            }
         }
     }
 
