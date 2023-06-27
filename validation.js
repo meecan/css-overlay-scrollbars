@@ -1,4 +1,4 @@
-HTMLElement.prototype.validation = function(st = {}) {
+HTMLElement.prototype.validation = function(opt = {}) {
 
     // Creating default variables.
     const form = this
@@ -7,9 +7,9 @@ HTMLElement.prototype.validation = function(st = {}) {
     let options = {
         realTime:true,
         firstTime:true,
-        onSubmit:null
+        onSubmit:null,
+        ...opt
     }
-    options = { ...options, ...st }
 
 
 
